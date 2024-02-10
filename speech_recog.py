@@ -42,7 +42,7 @@ def tokenizeFunc(text):
     print(set(impWords))
     
     print("Importing json data")
-    data = json.load(open('../Recommender System Code/recommederData.json'))
+    data = json.load(open('./recommenderData.json'))
     print("Data loaded")
     
     indices = dict()
