@@ -12,7 +12,7 @@ def recommend(word, data, word_vectors):
     for val in vals:
         avg = 0
         vals_length = 0
-        print(val)
+        # print(val)
         for value in val.items():
             try:
                 avg = avg + (value[1] * cosine_similarity([word_vectors[word]], [word_vectors[value[0]]])[0])
@@ -21,16 +21,16 @@ def recommend(word, data, word_vectors):
             except:
                 continue
         avg = avg / vals_length
-        indices[ind] = avg
+        indices[ind] = float(avg)
         if avg > maxAvg:
             maxInd = ind
             maxAvg = avg
         ind = ind + 1
-    print("The indices dict is as follows")
-    print(indices)
+    # print("The indices dict is as follows")
+    # print(indices)
     sorted_indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=True))
-    print("The sorted indices dict is as follows")
-    print(sorted_indices)
+    # print("The sorted indices dict is as follows")
+    # print(sorted_indices)
     
     indices = {key: sorted_indices[key] for key in list(sorted_indices)[:3]}
     print("The top 3 indices are")
@@ -45,7 +45,8 @@ def recommend_categories(word, data, word_vectors):
     indices = dict()
     ind = 0
     for key in keys:
-        indices[ind] = cosine_similarity([word_vectors[key.lower()]], [word_vectors[word]])
+        indices[ind] = float(cosine_similarity([word_vectors[key.lower()]], [word_vectors[word]]))
+        ind = ind + 1
     
     indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=True))
     indices = {key: indices[key] for key in list(indices)[:3]}

@@ -8,8 +8,11 @@ from recommender_system import recommend, recommend_categories
 import gensim.downloader as api
 import json
 import operator
+from flask import Flask
 
-recognizer = speech_recognition.Recognizer()
+app = Flask(__name__)
+
+# recognizer = speech_recognition.Recognizer()
 
 # Stop words are the common high-frequency words that are not useful for analysis
 stop_words = set(stopwords.words('english'))
@@ -49,14 +52,20 @@ def tokenizeFunc(text):
     
     for word in set(impWords):
         recommended_catergories_indices = recommend_categories(word=word, data=data, word_vectors=word_vectors)
+        # print("Recommend category indices")
+        # print(recommended_catergories_indices)
         for key, value in recommended_catergories_indices.items():
+            # print(key,": ", value)
             try:
                 if key not in indices:
-                    indices[key] = value[0]
+                    indices[key] = value
+                    print(indices)
                 else:
                     indices[key] = max(indices[key], value[0])
             except:
                 continue
+    # print("Indices values after categories")
+    # print(indices)
     
     for word in set(impWords):
         recommended_indices = recommend(word=word, data=data, word_vectors=word_vectors)
@@ -70,6 +79,8 @@ def tokenizeFunc(text):
                     indices[key] = max(indices[key], value[0])
             except:
                 continue
+    print("Indices values after recommendation")
+    print(indices)
     
     indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=True))
     indices = {key: indices[key] for key in list(indices)[:3]}
@@ -80,33 +91,45 @@ def tokenizeFunc(text):
     keys = list(data.keys())
     for key, value in indices.items():
         # print(keys[key])
+        # print(list(data[keys[key]]))
         for word in set(impWords):
-            if word not in data[keys[key]]:
+            if word not in list(data[keys[key]]):
+                # print("Inside if")
                 data[keys[key]][word] = 1
             else:
+                # print("Inside else")
                 data[keys[key]][word] += 1
+            # print(list(data[keys[key]]))
                 
                 
                 
         
-    with open('../Recommender System Code/recommederData.json', 'w') as file:
+    with open('./recommenderData.json', 'w') as file:
         json.dump(data, file, indent=2)
+    
+    return indices
 
-# print("Welcome to speech recognition system")
-# print("Please pause for a while to let the system process your words")
-# print("To quit, just speak 'exit'")
-# text = ""
-# while text != "exit":
-#     try:
-#         with speech_recognition.Microphone() as mic:
-#             recognizer.adjust_for_ambient_noise (mic, duration=0.2) 
-#             audio = recognizer.listen(mic)
-#             text = recognizer.recognize_google (audio)
-#             text = text.lower()
-#             tokenizeFunc(text)
+@app.route('/', methods = ['GET'])
+def speechRecog():
+    recognizer = speech_recognition.Recognizer()
+    print("Welcome to speech recognition system")
+    print("Please pause for a while to let the system process your words")
+    print("To quit, just speak 'exit'")
+    text = ""
+    # indices = dict()
+    # while text != "exit":
+    try:
+        with speech_recognition.Microphone() as mic:
+            recognizer.adjust_for_ambient_noise (mic, duration=0.2) 
+            audio = recognizer.listen(mic)
+            text = recognizer.recognize_google (audio)
+            text = text.lower()
+            return tokenizeFunc(text)
         
-#     except speech_recognition.UnknownValueError:
-#         recognizer = speech_recognition.Recognizer()
-#         continue
-
-tokenizeFunc("I have a lot of luggage with me".lower())
+    except speech_recognition.UnknownValueError:
+        recognizer = speech_recognition.Recognizer()
+        # continue
+    # return json.dumps(indices)
+    
+if __name__ == "__main__":
+    app.run()
