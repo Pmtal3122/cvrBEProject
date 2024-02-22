@@ -109,7 +109,7 @@ def tokenizeFunc(text):
     with open('./recommenderData.json', 'w') as file:
         json.dump(data, file, indent=2)
     
-    return indices
+    return list(indices.keys())
 
 @app.route('/', methods = ['GET'])
 @cross_origin()
