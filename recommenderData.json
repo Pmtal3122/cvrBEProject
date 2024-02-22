@@ -56,10 +56,14 @@
     "lot": 3,
     "luggage": 3,
     "beach": 1,
-    "hotel": 1
+    "hotel": 3,
+    "tell": 1,
+    "week": 1,
+    "11": 1,
+    "class": 1
   },
   "Sunglasses": {
-    "glass": 1,
+    "glass": 4,
     "goggles": 1,
     "frame": 1,
     "spectacles": 1,
@@ -67,7 +71,7 @@
     "sun": 1,
     "heat": 1,
     "glare": 1,
-    "water": 1,
+    "water": 4,
     "sadness": 1,
     "life": 1,
     "aspirations": 1
@@ -98,7 +102,11 @@
     "center": 1,
     "patients": 1,
     "luggage": 2,
-    "lot": 2
+    "lot": 2,
+    "tell": 1,
+    "week": 1,
+    "right": 1,
+    "desert": 2
   },
   "Gloves": {
     "winter": 1,
@@ -141,7 +149,8 @@
     "baggy": 1,
     "loose": 1,
     "lot": 1,
-    "luggage": 1
+    "luggage": 1,
+    "hotel": 2
   },
   "Watch": {
     "time": 1,
@@ -168,7 +177,15 @@
     "travel": 1,
     "location": 1,
     "beach": 1,
-    "hotel": 1
+    "hotel": 3,
+    "tell": 1,
+    "week": 1,
+    "right": 1,
+    "11": 1,
+    "class": 1,
+    "water": 3,
+    "glass": 3,
+    "desert": 2
   },
   "Belt": {
     "pant": 1,
@@ -177,6 +194,12 @@
     "leather": 1,
     "holes": 1,
     "beach": 1,
-    "hotel": 1
+    "hotel": 1,
+    "right": 1,
+    "11": 1,
+    "class": 1,
+    "water": 3,
+    "glass": 3,
+    "desert": 2
   }
 }

@@ -9,8 +9,10 @@ import gensim.downloader as api
 import json
 import operator
 from flask import Flask
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
 
 # recognizer = speech_recognition.Recognizer()
 
@@ -110,6 +112,7 @@ def tokenizeFunc(text):
     return indices
 
 @app.route('/', methods = ['GET'])
+@cross_origin()
 def speechRecog():
     recognizer = speech_recognition.Recognizer()
     print("Welcome to speech recognition system")
@@ -128,6 +131,7 @@ def speechRecog():
         
     except speech_recognition.UnknownValueError:
         recognizer = speech_recognition.Recognizer()
+        return {}
         # continue
     # return json.dumps(indices)
     
