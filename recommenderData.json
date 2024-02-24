@@ -65,7 +65,9 @@
     "week": 1,
     "11": 1,
     "class": 1,
-    "formals": 1
+    "formals": 1,
+    "interview": 1,
+    "dress": 2
   },
   "Sunglasses": {
     "glass": 10,
@@ -79,7 +81,8 @@
     "water": 10,
     "sadness": 1,
     "life": 1,
-    "aspirations": 1
+    "aspirations": 1,
+    "dress": 2
   },
   "Hat": {
     "cap": 1,
@@ -112,7 +115,8 @@
     "week": 1,
     "right": 1,
     "desert": 2,
-    "meat": 1
+    "meat": 1,
+    "interview": 1
   },
   "Gloves": {
     "winter": 1,
@@ -123,7 +127,7 @@
     "woollen": 1,
     "mountain": 1,
     "himalayas": 1,
-    "water": 7,
+    "water": 13,
     "glass": 1,
     "sunny": 1,
     "travel": 1,
@@ -164,7 +168,8 @@
     "hotel": 2,
     "t-shirt": 1,
     "shoes": 1,
-    "buy": 1
+    "buy": 1,
+    "dress": 2
   },
   "Watch": {
     "time": 1,
@@ -197,10 +202,11 @@
     "right": 1,
     "11": 1,
     "class": 1,
-    "water": 15,
+    "water": 21,
     "glass": 9,
     "desert": 2,
-    "meat": 1
+    "meat": 1,
+    "interview": 1
   },
   "Belt": {
     "pant": 1,
@@ -213,7 +219,7 @@
     "right": 1,
     "11": 1,
     "class": 1,
-    "water": 15,
+    "water": 21,
     "glass": 9,
     "desert": 2
   }
