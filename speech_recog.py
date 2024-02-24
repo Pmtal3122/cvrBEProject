@@ -135,5 +135,5 @@ def speechRecog():
         # continue
     # return json.dumps(indices)
     
-if __name__ == "__main__":
-    app.run()
+# if __name__ == "__main__":
+#     app.run()
