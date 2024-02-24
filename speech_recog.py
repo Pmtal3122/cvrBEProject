@@ -14,6 +14,8 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app)
 
+nltk.download("stopwords")
+
 # recognizer = speech_recognition.Recognizer()
 
 # Stop words are the common high-frequency words that are not useful for analysis
