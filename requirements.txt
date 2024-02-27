@@ -6,4 +6,4 @@ nltk
 flask_cors
 scikit-learn
 gensim
-pyaudio==0.2.14 --install-requires
+pyaudio
