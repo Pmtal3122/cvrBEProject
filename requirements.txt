@@ -7,3 +7,4 @@ flask_cors
 scikit-learn
 gensim
 pyaudio
+portaudio
