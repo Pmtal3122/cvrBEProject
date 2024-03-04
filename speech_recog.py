@@ -8,7 +8,7 @@ from recommender_system import recommend, recommend_categories
 import gensim.downloader as api
 import json
 import operator
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -31,7 +31,7 @@ model = api.load('glove-wiki-gigaword-50')
 word_vectors = model
 print("Imported the word vectors")
 
-def tokenizeFunc(text):
+def tokenizeFunc(text, data):
     print("Inside tokenizeFunc")
     print(text)
     tokens = word_tokenize(text)
@@ -48,9 +48,9 @@ def tokenizeFunc(text):
     print("The important words are:")
     print(set(impWords))
     
-    print("Importing json data")
-    data = json.load(open('./recommenderData.json'))
-    print("Data loaded")
+    # print("Importing json data")
+    # data = json.load(open('./recommenderData.json'))
+    # print("Data loaded")
     
     indices = dict()
     
@@ -124,12 +124,15 @@ def speechRecog():
     # indices = dict()
     # while text != "exit":
     try:
+        recData = request.args.get('recData')
+        data = json.loads(recData)
+        # print(recData)
         with speech_recognition.Microphone() as mic:
             recognizer.adjust_for_ambient_noise (mic, duration=0.2) 
             audio = recognizer.listen(mic)
             text = recognizer.recognize_google (audio)
             text = text.lower()
-            return tokenizeFunc(text)
+            return tokenizeFunc(text, data=data)
         
     except speech_recognition.UnknownValueError:
         recognizer = speech_recognition.Recognizer()
