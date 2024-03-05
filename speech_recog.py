@@ -108,8 +108,8 @@ def tokenizeFunc(text, data):
                 
                 
         
-    with open('./recommenderData.json', 'w') as file:
-        json.dump(data, file, indent=2)
+    # with open('./recommenderData.json', 'w') as file:
+    #     json.dump(data, file, indent=2)
     
     return [list(indices.keys()), data]
 
