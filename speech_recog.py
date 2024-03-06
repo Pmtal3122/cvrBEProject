@@ -91,19 +91,14 @@ def tokenizeFunc(text, data):
     print("The final indices dict is as follows")
     print(indices)
     
-    print("The recommended products are:")
-    keys = list(data.keys())
-    for key, value in indices.items():
-        # print(keys[key])
-        # print(list(data[keys[key]]))
-        for word in set(impWords):
-            if word not in list(data[keys[key]]):
-                # print("Inside if")
-                data[keys[key]][word] = 1
-            else:
-                # print("Inside else")
-                data[keys[key]][word] += 1
-            # print(list(data[keys[key]]))
+    # print("The recommended products are:")
+    # keys = list(data.keys())
+    # for key, value in indices.items():
+    #     for word in set(impWords):
+    #         if word not in list(data[keys[key]]):
+    #             data[keys[key]][word] = 1
+    #         else:
+    #             data[keys[key]][word] += 1
                 
                 
                 
@@ -111,7 +106,7 @@ def tokenizeFunc(text, data):
     # with open('./recommenderData.json', 'w') as file:
     #     json.dump(data, file, indent=2)
     
-    return [list(indices.keys()), data]
+    return [list(indices.keys()), list(impWords)]
 
 @app.route('/', methods = ['GET'])
 @cross_origin()
