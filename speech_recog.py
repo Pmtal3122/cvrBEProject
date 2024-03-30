@@ -23,7 +23,7 @@ stop_words = set(stopwords.words('english'))
 
 #POS_TAGS are the type of tokens
 #We have to pick the types which are useful for our analysis
-impPostags = ['CD', 'NN', 'NNS', 'LS', 'NNP']
+impPostags = ['CD', 'NN', 'NNS', 'LS', 'NNP', 'VBG']
 impWords = []
 
 print("Importing the word vectors")
@@ -56,8 +56,6 @@ def tokenizeFunc(text, data):
     
     for word in set(impWords):
         recommended_catergories_indices = recommend_categories(word=word, data=data, word_vectors=word_vectors)
-        # print("Recommend category indices")
-        # print(recommended_catergories_indices)
         for key, value in recommended_catergories_indices.items():
             # print(key,": ", value)
             try:
@@ -68,12 +66,9 @@ def tokenizeFunc(text, data):
                     indices[key] = max(indices[key], value[0])
             except:
                 continue
-    # print("Indices values after categories")
-    # print(indices)
     
     for word in set(impWords):
         recommended_indices = recommend(word=word, data=data, word_vectors=word_vectors)
-        # indices.add(index)
         for key, value in recommended_indices.items():
             try:
                 print(key,": ", value[0])
@@ -90,22 +85,7 @@ def tokenizeFunc(text, data):
     indices = {key: indices[key] for key in list(indices)[:3]}
     print("The final indices dict is as follows")
     print(indices)
-    
-    # print("The recommended products are:")
-    # keys = list(data.keys())
-    # for key, value in indices.items():
-    #     for word in set(impWords):
-    #         if word not in list(data[keys[key]]):
-    #             data[keys[key]][word] = 1
-    #         else:
-    #             data[keys[key]][word] += 1
-                
-                
-                
         
-    # with open('./recommenderData.json', 'w') as file:
-    #     json.dump(data, file, indent=2)
-    
     return [list(indices.keys()), list(impWords)]
 
 @app.route('/', methods = ['GET'])
@@ -132,8 +112,6 @@ def speechRecog():
     except speech_recognition.UnknownValueError:
         recognizer = speech_recognition.Recognizer()
         return {}
-        # continue
-    # return json.dumps(indices)
     
 if __name__ == "__main__":
     app.run()
