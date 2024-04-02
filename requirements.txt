@@ -1,8 +1,2 @@
 Flask
 Gunicorn
-speechrecognition
-pyttsx3
-nltk
-flask_cors
-scikit-learn
-gensim
