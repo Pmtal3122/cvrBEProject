@@ -10,6 +10,7 @@ import json
 import operator
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
+from textblob import TextBlob
 
 app = Flask(__name__)
 CORS(app)
@@ -32,6 +33,11 @@ word_vectors = model
 print("Imported the word vectors")
 
 def tokenizeFunc(text, data):
+    positivity = True
+    print("The polarity is ", TextBlob(text).sentiment.polarity)
+    if TextBlob(text).sentiment.polarity < 2.0:
+        positivity = False
+    
     print("Inside tokenizeFunc")
     print(text)
     tokens = word_tokenize(text)
@@ -48,14 +54,10 @@ def tokenizeFunc(text, data):
     print("The important words are:")
     print(set(impWords))
     
-    # print("Importing json data")
-    # data = json.load(open('./recommenderData.json'))
-    # print("Data loaded")
-    
     indices = dict()
     
     for word in set(impWords):
-        recommended_catergories_indices = recommend_categories(word=word, data=data, word_vectors=word_vectors)
+        recommended_catergories_indices = recommend_categories(word=word, data=data, word_vectors=word_vectors, positivity=positivity)
         for key, value in recommended_catergories_indices.items():
             # print(key,": ", value)
             try:
@@ -63,25 +65,31 @@ def tokenizeFunc(text, data):
                     indices[key] = value
                     print(indices)
                 else:
-                    indices[key] = max(indices[key], value[0])
+                    if positivity == False:
+                        indices[key] = min(indices[key], value[0])
+                    else:
+                        indices[key] = max(indices[key], value[0])
             except:
                 continue
     
     for word in set(impWords):
-        recommended_indices = recommend(word=word, data=data, word_vectors=word_vectors)
+        recommended_indices = recommend(word=word, data=data, word_vectors=word_vectors, positivity=positivity)
         for key, value in recommended_indices.items():
             try:
                 print(key,": ", value[0])
                 if key not in indices:
                     indices[key] = value[0]
                 else:
-                    indices[key] = max(indices[key], value[0])
+                    if positivity == False:
+                        indices[key] = min(indices[key], value[0])
+                    else:
+                        indices[key] = max(indices[key], value[0])
             except:
                 continue
     print("Indices values after recommendation")
     print(indices)
     
-    indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=True))
+    indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=False if positivity == False else True))
     indices = {key: indices[key] for key in list(indices)[:3]}
     print("The final indices dict is as follows")
     print(indices)

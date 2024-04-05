@@ -1,2 +1,6 @@
 Flask
 Gunicorn
+waitress
+speechrecognition
+nltk
+gensim
