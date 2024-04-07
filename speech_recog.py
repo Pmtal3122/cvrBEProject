@@ -34,7 +34,6 @@ print("Imported the word vectors")
 
 def tokenizeFunc(text, data):
     positivity = True
-    print("The polarity is ", TextBlob(text).sentiment.polarity)
     if TextBlob(text).sentiment.polarity < 2.0:
         positivity = False
     
