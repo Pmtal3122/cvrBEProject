@@ -34,7 +34,8 @@ print("Imported the word vectors")
 
 def tokenizeFunc(text, data):
     positivity = True
-    if TextBlob(text).sentiment.polarity < 2.0:
+    polarity = TextBlob(text).sentiment.polarity
+    if float(polarity) < 0.2:
         positivity = False
     
     print("Inside tokenizeFunc")
@@ -62,12 +63,12 @@ def tokenizeFunc(text, data):
             try:
                 if key not in indices:
                     indices[key] = value
-                    print(indices)
+                    # print(indices)
                 else:
                     if positivity == False:
-                        indices[key] = min(indices[key], value[0])
+                        indices[key] = min(indices[key], value)
                     else:
-                        indices[key] = max(indices[key], value[0])
+                        indices[key] = max(indices[key], value)
             except:
                 continue
     
@@ -75,18 +76,17 @@ def tokenizeFunc(text, data):
         recommended_indices = recommend(word=word, data=data, word_vectors=word_vectors, positivity=positivity)
         for key, value in recommended_indices.items():
             try:
-                print(key,": ", value[0])
                 if key not in indices:
-                    indices[key] = value[0]
+                    indices[key] = value
                 else:
                     if positivity == False:
-                        indices[key] = min(indices[key], value[0])
+                        indices[key] = min(indices[key], value)
                     else:
-                        indices[key] = max(indices[key], value[0])
+                        indices[key] = max(indices[key], value)
             except:
                 continue
-    print("Indices values after recommendation")
-    print(indices)
+    # print("Indices values after recommendation")
+    # print(indices)
     
     indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=False if positivity == False else True))
     indices = {key: indices[key] for key in list(indices)[:3]}

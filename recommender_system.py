@@ -24,8 +24,8 @@ def recommend(word, data, word_vectors, positivity):
         ind = ind + 1
     sorted_indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=False if positivity == False else True))
     indices = {key: sorted_indices[key] for key in list(sorted_indices)[:3]}
-    print("The top 3 indices are")
-    print(indices)
+    # print("The top 3 indices are")
+    # print(indices)
     
     
     return indices
@@ -39,7 +39,14 @@ def recommend_categories(word, data, word_vectors, positivity):
         indices[ind] = float(cosine_similarity([word_vectors[key.lower()]], [word_vectors[word]]))
         ind = ind + 1
     
-    indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=False if positivity == False else True))
+    if positivity == True:
+        indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=True))
+    else:
+        indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=False))
+    
+    # print("Indices in recommend_categories after sorting")
+    # print(indices)
+    
     indices = {key: indices[key] for key in list(indices)[:3]}
 
     return indices
