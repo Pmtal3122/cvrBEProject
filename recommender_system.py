@@ -44,9 +44,9 @@ def recommend_categories(word, data, word_vectors, positivity):
     else:
         indices = dict(sorted(indices.items(), key=operator.itemgetter(1), reverse=False))
     
-    # print("Indices in recommend_categories after sorting")
-    # print(indices)
+    print("Indices in recommend_categories after sorting")
+    print(indices)
     
     indices = {key: indices[key] for key in list(indices)[:3]}
 
-    return indices
+    return dict(list(indices.items())[:7])
